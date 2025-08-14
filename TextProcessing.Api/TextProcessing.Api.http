@@ -1,0 +1,6 @@
+@TextProcessing.Api_HostAddress = http://localhost:5234
+
+GET {{TextProcessing.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
