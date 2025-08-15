@@ -19,7 +19,6 @@ namespace TextProcessing.Api.Middleware
       }
       catch (OperationCanceledException)
       {
-        // swallow cancellations (client aborted) to avoid noisy logs
         context.Response.StatusCode = StatusCodes.Status499ClientClosedRequest;
       }
       catch (Exception ex)

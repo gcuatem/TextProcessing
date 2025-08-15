@@ -23,10 +23,7 @@ namespace TextProcessing.Api.Controllers
       if (request is null || request.Input is null)
         return BadRequest("Body must include 'input'.");
 
-      // Prepare for streaming
       Response.ContentType = "text/plain";
-      Response.Headers["Cache-Control"] = "no-store";
-      Response.Headers["X-Accel-Buffering"] = "no"; // For nginx to disable buffering
 
       await Response.StartAsync(HttpContext.RequestAborted);
 
@@ -42,13 +39,12 @@ namespace TextProcessing.Api.Controllers
       }
       catch (OperationCanceledException)
       {
-        // Client disconnected or cancelled — just end the response cleanly
         HttpContext.Response.HttpContext.Features.Get<IHttpResponseBodyFeature>()?.DisableBuffering();
         return new EmptyResult();
       }
     }
 
-    [HttpGet("health")] // simple health endpoint
+    [HttpGet("health")] 
     public IActionResult Health() => Ok(new { status = "ok" });
   }
 }
